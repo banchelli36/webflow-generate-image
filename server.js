@@ -17,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/generate", async (req, res) => {
+  console.log("webhook triggered: ");
   try {
     let entries = [];
     requestLocationData(0).then((response) => {
