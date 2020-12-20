@@ -29,6 +29,7 @@
     "fs": "0.0.1-security",
     "jsonfile": "^6.1.0",
     "nodemon": "^2.0.6",
+    "path": "^0.12.7",
     "request": "^2.88.2"
   }
 }
