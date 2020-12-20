@@ -47,7 +47,14 @@ app.get("/generate", async (req, res) => {
   //     console.log("error: ", err);
   //   }
   res.status(200).json({
-      message: "triggered"
+    message: "triggered",
+  });
+});
+
+app.post("/generate", async (req, res) => {
+  console.log("webhook triggered post: ");
+  res.status(200).json({
+    message: "triggered",
   });
 });
 
