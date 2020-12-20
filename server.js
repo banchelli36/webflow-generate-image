@@ -62,7 +62,7 @@ const requestLocationData = (offset) => {
   const url = `https://cors-anywhere.herokuapp.com/api.webflow.com/collections/5fb1c7dafe82bc064dd10ee3/items?offset=${offset}`;
   const headers = {
     Authorization:
-      "Bearer a9b5f876b766f8f329f916eab857eb0d6c011096d8c8164406e386a6ef1af567",
+      "Bearer bdb47ad338896ff91f7d7a64236a91640ecf45826e9cb24f604d69b11ed9eb87",
     "accept-version": "1.0.0",
     "cache-control": "public",
     "X-Requested-With": "x-requested-with, x-requested-by",
