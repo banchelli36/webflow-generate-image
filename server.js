@@ -4,6 +4,8 @@ const app = express();
 const jsonfile = require("jsonfile");
 const locationsFile = "./locations.json";
 // const locationsData = require("./locations.json");
+const bodyParser = require('body-parser')
+const jsonParser = bodyParser.json()
 
 const fs = require("fs");
 const request = require("request");
@@ -16,8 +18,8 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/generate", async (req, res) => {
-  console.log("webhook triggered: ");
+app.get("/generate", jsonParser, (req, res) => {
+  console.log("webhook triggered: ", req.body);
   //   try {
   //     let entries = [];
   //     requestLocationData(0).then((response) => {
@@ -51,9 +53,9 @@ app.get("/generate", async (req, res) => {
   });
 });
 
-app.post("/generate", async (req, res) => {
+app.post("/generate", jsonParser, (req, res) => {
 //   const requestData = req.body;
-  console.log("webhook triggered post: ", req);
+  console.log("webhook triggered post: ", req.body);
   res.status(200).json({
     message: "triggered",
   });
