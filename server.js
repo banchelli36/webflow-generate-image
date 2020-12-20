@@ -52,7 +52,8 @@ app.get("/generate", async (req, res) => {
 });
 
 app.post("/generate", async (req, res) => {
-  console.log("webhook triggered post: ");
+  const requestData = req.body;
+  console.log("webhook triggered post: ", requestData);
   res.status(200).json({
     message: "triggered",
   });
