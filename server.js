@@ -3,7 +3,6 @@ const axios = require("axios").default;
 const app = express();
 const jsonfile = require("jsonfile");
 const locationsFile = "./locations.json";
-// const locationsData = require("./locations.json");
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
 const path = require("path");
@@ -69,9 +68,32 @@ app.post("/generate", jsonParser, (req, res) => {
 });
 
 app.get("/generate-image", async (req, res) => {
-  //   generateImages(locationsData);
   res.status(200).json({
     data: "generate-image",
+  });
+});
+
+app.get("/studios", async (req, res) => {
+  fs.readFile("./locations.json", "utf8", (err, jsonString) => {
+    if (err) {
+      console.log("Error reading file from disk:", err);
+      return;
+    }
+    try {
+      const locationsData = JSON.parse(jsonString);
+      console.log("locationsData is:", locationsData); // => "Customer address is: Infinity Loop Drive"
+      res.status(200).json({
+        status: "ok",
+        data: locationsData,
+        counter: locationsData.length
+      });
+    } catch (err) {
+      console.log("Error parsing JSON string:", err);
+      res.status(400).json({
+        status: "failed",
+        error: err,
+      });
+    }
   });
 });
 
