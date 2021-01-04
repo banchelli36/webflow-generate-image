@@ -60,6 +60,7 @@ app.post("/generate", jsonParser, (req, res) => {
   let locationData = [];
   const collectionData = req.body;
   locationData.push(collectionData);
+  updateLocationJsonFile(collectionData);
   generateImages(locationData);
   console.log("webhook triggered post: ", req.body);
   res.status(200).json({
@@ -85,7 +86,7 @@ app.get("/studios", async (req, res) => {
       res.status(200).json({
         status: "ok",
         data: locationsData,
-        counter: locationsData.length
+        counter: locationsData.length,
       });
     } catch (err) {
       console.log("Error parsing JSON string:", err);
@@ -96,6 +97,45 @@ app.get("/studios", async (req, res) => {
     }
   });
 });
+
+const updateLocationJsonFile = (locationData) => {
+  jsonReader("./locations.json", (err, locations) => {
+    if (err) {
+      console.log("Error reading file:", err);
+      return;
+    }
+    let newCollectionFlag = false;
+    
+    locations.map(element => {
+      if(element.slug == locationData.slug) {
+        element = locationData;
+        newCollectionFlag = true;
+      }
+    });
+
+    if(newCollectionFlag === false) {
+      locations.push(locationData);
+    }
+    
+    fs.writeFile("./locations.json", JSON.stringify(locations), (err) => {
+      if (err) console.log("Error writing file:", err);
+    });
+  });
+};
+
+function jsonReader(filePath, cb) {
+  fs.readFile(filePath, (err, fileData) => {
+      if (err) {
+          return cb && cb(err)
+      }
+      try {
+          const object = JSON.parse(fileData)
+          return cb && cb(null, object)
+      } catch(err) {
+          return cb && cb(err)
+      }
+  })
+}
 
 const requestLocationData = (offset) => {
   const url = `https://cors-anywhere.herokuapp.com/api.webflow.com/collections/5fb1c7dafe82bc064dd10ee3/items?offset=${offset}`;
