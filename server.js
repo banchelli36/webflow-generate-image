@@ -9,8 +9,10 @@ const path = require("path");
 
 const fs = require("fs");
 const request = require("request");
+const cors = require("cors");
 
 app.use(express.static(path.resolve("./public")));
+app.use(cors({ origin: "*" }));
 
 app.get("/", (req, res) => {
   res.json({
